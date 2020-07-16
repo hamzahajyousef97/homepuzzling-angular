@@ -1,0 +1,109 @@
+<div class="container arabic" style="margin-top: 85px;" dir="rtl">
+    <h2 class="text-center">
+        يسرنا دوماً تواصلكم معنا، اذا واجهتم عطل فني في موقعنا، او إن كان لديكم اقتراحٌ جديد يمكنكم مراسلتنا عبر الفورم التالي :
+    </h2>
+    <div class="col-md-10 center" style="margin-top: 50px;">
+        <form [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()" *ngIf="showForm" [className]="Sended ? 'zoomOut animated' : 'zoomIn animated'">
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="md-form">
+                        <div class="row">
+                            <div class="col-md-1 col-1">
+                                <i class="fa fa-user prefix" style="margin-top: 10px;"></i>
+                            </div>
+                            <div class="col-xl-11 col-md-10 col-10">
+                                <input mdbInputDirective type="text" class="form-control" formControlName="firstname" type="text" required>
+                                <label>الاسم:</label>
+                            </div>
+                        </div>
+                        <div style="height: 24px;">
+                            <mat-error *ngIf="formErrors.firstname">
+                                {{ formErrors.firstname }}
+                            </mat-error>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="md-form">
+                        <div class="row">
+                            <div class="col-md-1 col-1">
+                                <i class="fa fa-user prefix" style="margin-top: 10px;"></i>
+                            </div>
+                            <div class="col-xl-11 col-md-10 col-10">
+                                <input mdbInputDirective type="text" class="form-control" formControlName="lastname" type="text" required>
+                                <label>الكنية:</label>
+                            </div>
+                        </div>
+                        <div style="height: 24px;">
+                            <mat-error *ngIf="formErrors.lastname">
+                                {{ formErrors.lastname }}
+                            </mat-error>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="md-form">
+                        <div class="row">
+                            <div class="col-md-1 col-1">
+                                <i class="fa fa-envelope prefix" style="margin-top: 10px;font-size: 20px;"></i>
+                            </div>
+                            <div class="col-xl-11 col-md-10 col-10">
+                                <input mdbInputDirective type="email" class="form-control" formControlName="email" email required>
+                                <label>الإيميل:</label>
+                            </div>
+                        </div>
+                        <div style="height: 24px;">
+                            <mat-error *ngIf="formErrors.email">
+                                {{ formErrors.email }}
+                            </mat-error>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="md-form">
+                        <div class="row">
+                            <div class="col-md-1 col-1">
+                                <i class="fa fa-phone prefix" style="margin-top: 10px;"></i>
+                            </div>
+                            <div class="col-xl-11 col-md-10 col-10">
+                                <input mdbInputDirective type="tel" class="form-control" formControlName="telnum" type="tel" pattern="[0-9]*" required>
+                                <label> الهاتف:</label>
+                            </div>
+                        </div>
+                        <div style="height: 24px;">
+                            <mat-error *ngIf="formErrors.telnum">
+                                {{ formErrors.telnum }}
+                            </mat-error>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="md-form">
+                        <div class="row">
+                            <div class="col-md-1 col-1">
+                                <i class="fas fa-comment-alt prefix" style="margin-top: 10px;"></i>
+                            </div>
+                            <div class="col-md-10 col-10">
+                                <textarea mdbInputDirective type="text" formControlName="message"  class="md-textarea form-control" rows="3"></textarea>
+                                <label>رسالتكم..</label>
+                            </div>
+                        </div>
+                        <div style="height: 24px;">
+                            <mat-error *ngIf="formErrors.message" style="margin-right: 75px;">
+                                {{ formErrors.message }}
+                            </mat-error>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-4 col-6 center" style="margin-top: 10px;">
+                    <button mdbBtn color="dark" class="center btn-block" [disabled]="feedbackForm.invalid" mdbWavesEffect>إرسال</button>
+                </div>
+            </div>
+        </form>
+        <div class="col-md-12" style="height: 150px; margin-top: 100px;" *ngIf="!showForm" [className]="showMessage ? 'zoomIn animated' : 'zoomOut animated'">
+            <h4 style="color: #00c851 !important;" class="text-center">
+                شكراً لكم على رسالتكم، سيقوم الفريق المختص بالردّ عليكم عبر البريد الإلكتروني لديكم
+            </h4>
+        </div>
+    </div>
+</div>

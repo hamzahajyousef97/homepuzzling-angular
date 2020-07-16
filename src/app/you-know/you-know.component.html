@@ -1,0 +1,16 @@
+<div class="container" style="margin-top: 100px;" dir="rtl" *ngIf="spinner">
+  <h1 class="text-center arabic">* هل تعلم ؟ *</h1>
+  <div class="col-md-12 text-right arabic">
+    <div *ngFor="let item of youKnow" style="margin-top: 50px;">
+        <p>- <span [innerHTML]="item.name"></span></p>
+        <p style="color: #21252994; margin-right: 10px;"><span [innerHTML]="item.description"></span></p>
+        <hr>
+    </div>
+  </div>
+</div>
+<div style="margin-top:100px" *ngIf="errMess">
+    <h3 class="arabic text-center">لقد حدث خطأ في الخادم اذهب الى <a routerLink="/">الصفحة الرئيسية</a></h3>
+</div>
+<div [hidden]="spinner || errMess">
+    <div style="margin-top:150px" class="loader"></div>
+</div>

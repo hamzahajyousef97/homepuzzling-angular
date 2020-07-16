@@ -1,0 +1,36 @@
+.smile {
+    font-size: 31px;
+    color: #000;
+}
+.sm-scr {
+    display: none;
+}
+.lg-scr {
+    display: block;
+}
+.btn-outline-info {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+@media only screen and (max-width: 480px) {
+    .smile {
+        font-size: 21px;
+    }
+    .btn-outline-info {
+        padding: 0.5rem 1.6rem;
+        font-size: 0.64rem;
+        padding-top: 0.38rem;
+        padding-bottom: 0.38rem;
+    }
+}
+@media only screen and (max-width: 900px) {
+    .sm-scr {
+        display: block;
+    }
+    .lg-scr {
+        display: none;
+    }
+}
+.breadcrumb-item + .breadcrumb-item::before {
+    padding-left: 0.25rem;
+}

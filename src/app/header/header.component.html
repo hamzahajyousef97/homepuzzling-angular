@@ -1,0 +1,47 @@
+<!-- <nav class="navbar navbar-dark fixed-top" style="background-color:#303030" dir="rtl">
+    <div class="container-fluid">
+        <div class="col-md-4 col-6 mr-auto">
+          <h3 style="font-family: 'Lato', sans-serif;"><a style="color: #fff;" routerLink="/">Home Puzzling</a></h3>
+        </div>
+    </div>
+</nav> -->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-light blue-grey lighten-5 fixed-top">
+    <mdb-navbar-brand><a class="navbar-brand" style="font-family: 'Lato', sans-serif;" routerLink="/">Home Puzzling</a></mdb-navbar-brand>
+    <links>
+        <ul class="navbar-nav ml-auto arabic" dir="rtl">
+            <li class="nav-item">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/">الصفحة الرئيسية<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/doYouKnow">هل تعلم ؟</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/informations', id]">معلومات متنوعة</a>
+            </li>
+            <li class="nav-item dropdown" dropdown>
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+                قائمة الاختبارات<span class="caret"></span></a>
+                <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+                    <a class="dropdown-item waves-light text-right" mdbWavesEffect routerLink="general-culture">اختبار ثقافة عامة</a>
+                    <div class="divider dropdown-divider"></div>
+                    <a class="dropdown-item waves-light text-right" mdbWavesEffect routerLink="countries">اختبار معلومات دول</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/contact">تواصل معنا</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.facebook.com/homepuzzling" target="_blank">
+                    <mdb-icon fab icon="facebook-square"></mdb-icon>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.instagram.com/homepuzzling/" target="_blank">
+                    <mdb-icon fab icon="instagram"></mdb-icon>
+                </a>
+            </li>
+        </ul>
+    </links>
+</mdb-navbar>

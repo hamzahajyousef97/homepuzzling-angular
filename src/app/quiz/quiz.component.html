@@ -1,0 +1,187 @@
+<div class="container arabic" style="margin-top: 80px" *ngIf="spinner">
+  <div id="quiz" *ngIf="quizSelected" dir="rtl">
+    <h2 class="text-center font-weight-normal">{{quiz.name}}</h2>
+    <hr>
+    <nav style="background: #e9ecef !important;" aria-label="breadcrumb">
+      <ol class="breadcrumb col-12">
+        <li class="breadcrumb-item"><a routerLink="/">الصفحة الرئيسية</a></li>
+        <li class="breadcrumb-item" aria-current="page" routerLink="/{{quizType}}" style="color: #007bff;"><a> اختبار {{quizTypeAR}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{quiz.name}}</li>
+      </ol>
+    </nav>
+    <div *ngIf="mode=='quiz' && quiz">
+      <div *ngFor="let question of filteredQuestions;">
+        <div class="row">
+          <div class="col-6">
+            <h5 class="text-right"><span *ngIf="config.duration" class="badge badge-dark">Time: {{ellapsedTime}} / {{duration}}</span></h5>
+          </div>
+          <div class="col-6">
+            <h5 class="text-left"><span class="badge badge-dark">السؤال {{pager.index + 1}} من اصل {{pager.count}}</span></h5>
+          </div>
+        </div>
+        <h3 class="font-weight-normal text-right" [@visibility]="visibility" [@expand] style="margin-top: 20px;">{{pager.index + 1}})
+          <span [innerHTML]="question.name"></span>
+        </h3>
+        <!-- autoMove is true  -->
+        <div class="row text-left options" [@visibility]="visibility" [@expand] *ngIf="quiz.autoMove">
+          <div class="col-md-6 col-12" style="margin-top: 10px;" *ngFor="let option of question.options">
+            <label class="font-weight-normal list-group-item list-group-item-action text-right" [attr.for]="option.id">
+              {{option.name}} <input style="visibility:hidden;" id="{{option.id}}" type="checkbox" [(ngModel)]="option.selected" (change)="onSelect(question, option);" />
+            </label>
+          </div>
+        </div>
+        <!-- autoMove is false  -->
+        <div class="row text-left options" [@visibility]="visibility" [@expand] *ngIf="!quiz.autoMove">
+          <div class="col-md-6 col-12" style="margin-top: 10px;" *ngFor="let option of question.options">
+              <label class="font-weight-normal list-group-item list-group-item-action text-right" [attr.for]="option.id">
+                {{option.name}} <input style="float: left;" id="{{option.id}}" type="checkbox" [(ngModel)]="option.selected" (change)="onSelect(question, option);" />
+              </label>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!quiz.autoMove">
+        <br>
+        <div class="text-center">
+          <button class="btn btn-link btn-lg" *ngIf="config.allowBack" (click)="goTo(pager.index - 1);"><i class="fas fa-arrow-right"></i></button>
+          <button class="btn btn-link btn-lg" style="color: #007bff !important;" (click)="goTo(pager.index + 1);"><i class="fas fa-arrow-left"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="result" *ngIf="mode=='result'" dir="rtl">
+      <div class="row" [@visibility]="visibility" [@expand] style="background-color: #eee;">
+        <div class="container"> 
+          <div class="row">
+            <div class="col-8">
+              <h2 class="text-right" style="margin-top: 15px;">نتيجة الامتحان هي</h2>
+            </div>
+            <div class="col-4">
+              <span style="font-size:40px">%{{getResult()}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row alert-success" [@visibility]="visibility" [@expand]>
+        <div class="col-9">
+          <h2 class="text-right" style="margin-top: 5px;">الأجوبة الصحيحة:</h2>
+        </div>
+        <div class="col-3" style="margin-top: 5px;">
+          <span style="font-size: 25px;">{{trueQuestions}}</span>
+        </div>
+      </div>
+      <div class="row alert-danger" [@visibility]="visibility" [@expand]>
+        <div class="col-9">
+          <h2 class="text-right" style="margin-top: 5px;">الأجوبة الخاطئة:</h2>
+        </div>
+        <div class="col-3" style="margin-top: 5px;">
+          <span style="font-size: 25px;">{{falseQuestions}}</span>
+        </div>
+      </div>
+      <br>
+      <div class="row" [@visibility]="visibility" [@expand]>
+        <div class="container">
+          <h2 class="text-center" style="margin-top: 5px;">{{comment}} <a routerLink="/{{quizType}}">اختبارات {{quizTypeAR}} </a></h2>
+          <div class="container"><hr></div>
+          <div class="center">
+            <h6 class="text-center"> شارك التحدي مع اصدقائك عبر الـــ 
+              <a style="color:#28a745 !important; font-size: 1rem !important;" class="btn btn-link lg-scr"
+               [href]="['https://web.whatsapp.com/send?text=نتيجتي كانت  ' + getResult() +'% في '+ quiz.name +' 👍%0a دعني ارى نتيجتك في هذا الاختبار 🙂%0a https://www.homepuzzling.com/quiz/' + quiz.link]">واتساب 
+               <i class="fab fa-whatsapp"></i>
+              </a>
+              <a style="color:#28a745 !important; font-size: 1rem !important;" class="btn btn-link sm-scr"
+                [href]="['https://wa.me?text=نتيجتي كانت ' + getResult() +'% في '+ quiz.name +' 👍%0a دعني ارى نتيجتك في هذا الاختبار 🙂%0a https://www.homepuzzling.com/quiz/' + quiz.link]">واتساب 
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </h6>
+          </div>
+          <div class="container">
+            <br>
+            <hr>
+            <h6 class="text-center">
+              اختبارات مقترحة
+            </h6>
+            <br>
+            <div class="row" *ngIf="quizType == 'general-culture'">
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/culture">إمتحان ثقافة عامة</a>
+              </div>
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/thesaying">إكمال مقولة</a>
+              </div>
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/islamicculture">اختبار ثقافة الاسلامية</a>
+              </div>
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/capitalcity">اختبار عواصم العالم</a>
+              </div>
+              <!-- <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/general">معلومات عامة</a>
+              </div> -->
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/poet">اكمل بيت الشعر</a>
+              </div>
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/corona">اختبار معلومات عن الكورونا</a>
+              </div>
+              <!-- <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/mathematics">اختبار رياضيات</a>
+              </div> -->
+            </div>
+
+            <div class="row" *ngIf="quizType == 'countries'">
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/IRAQ">اختبار معلومات عن دولة العراق</a>
+              </div>
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/EGYPT">اختبار معلومات عن دولة مصر</a>
+              </div>
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/ALGERIA">اختبار معلومات عن دولة الجزائر</a>
+              </div>
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/QATAR">اختبار معلومات عن دولة قطر</a>
+              </div>
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/UAE">اختبار معلومات عن دولة الإمارات</a>
+              </div>
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/JORDAN">اختبار معلومات عن دولة الاردن</a>
+              </div>
+              <div class="col-xl-3 col-lg-4 col-md-4 center">
+                <a class="btn btn-block btn-outline-info" href="/quiz/TUNISIA">اختبار معلومات عن دولة تونس</a>
+              </div>
+            </div>
+            <hr>
+            <br><br>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div *ngFor="let question of quiz.questions; let index = index">
+        <div class="result-question">
+          <h5 class="text-right">{{index + 1}}) <span [innerHTML]="question.name"></span></h5>
+          <div class="row">
+            <div class="col-12 text-right" *ngFor="let Option of question.options">
+              {{Option.name}} <input style="float: left;" id="{{Option.id}}" type="checkbox" disabled="disabled" [(ngModel)]="Option.selected" />
+            </div>
+          </div>
+          <div class="text-right p-1 m-2 alert {{ isCorrect(question) == 'صحيحة'? 'alert-success': 'alert-danger'}}">اجابة  {{isCorrect(question)}}.</div>
+        </div>
+      </div>
+      <p class="alert alert-info text-center">اضغط على <a routerLink="/">الصفحة الرئيسية</a> للبدء بامتحان آخر</p>
+    </div>
+    <div *ngIf="mode!='result'">
+      <br>
+      <br>
+      <div class="col-xl-2 col-lg-3 col-md-4 center">
+        <button style="border-radius: 30px;" mdbBtn type="button" color="dark" outline="true" mdbWavesEffect class="btn-block" (click)="onSubmit();">انهاء الامتحان</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:80px" *ngIf="errMess">
+  <h3 class="arabic text-center">لقد حدث خطأ في الخادم اذهب الى <a routerLink="/">الصفحة الرئيسية</a></h3>
+</div>
+<div [hidden]="spinner || errMess">
+  <div style="margin-top:150px" class="loader"></div>
+</div>
